@@ -421,22 +421,6 @@
             border: 1px solid rgba(239, 68, 68, 0.5);
             color: #f87171;
         }
-
-        /* Photo Upload Section */
-        .photo-preview-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-top: 15px;
-        }
-
-        .photo-thumb {
-            width: 100%;
-            height: 80px;
-            border-radius: 8px;
-            object-fit: cover;
-            border: 1px solid var(--border-glow);
-        }
     </style>
 </head>
 <body>
@@ -556,34 +540,12 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="guest-notes">Special Note / Wishes (Optional)</label>
-                    <input type="text" id="guest-notes" class="form-input" placeholder="Any dietary preferences or wishes">
-                </div>
-
                 <button type="submit" class="btn-primary" id="submit-btn">
                     💌 Submit RSVP
                 </button>
 
                 <div id="status-msg" class="status-msg"></div>
             </form>
-        </div>
-
-        <!-- Memory Capture & Photo Upload -->
-        <div class="card">
-            <h2 style="font-family: 'Cinzel', serif; margin-bottom: 12px; font-size: 1.3rem; text-align: center; color: var(--pastel-blue);">
-                📷 Event Memories
-            </h2>
-            <p style="text-align: center; font-size: 0.85rem; color: #94a3b8; margin-bottom: 15px;">
-                Snap and upload your memories during or after the party!
-            </p>
-            
-            <input type="file" id="camera-input" accept="image/*" capture="environment" style="display: none;" multiple>
-            <button class="btn-secondary" onclick="document.getElementById('camera-input').click()">
-                📸 Snap / Select Photos
-            </button>
-
-            <div class="photo-preview-grid" id="photo-preview"></div>
         </div>
 
     </div>
@@ -687,13 +649,11 @@
 
             const name = document.getElementById('guest-name').value.trim();
             const attending = document.querySelector('input[name="attending"]:checked').value;
-            const notes = document.getElementById('guest-notes').value.trim();
 
             const payload = {
                 name: name,
                 attending: attending,
-                pax: paxCount,
-                notes: notes
+                pax: paxCount
             };
 
             submitBtn.disabled = true;
@@ -796,23 +756,6 @@
 
         document.getElementById('audio-toggle').addEventListener('click', () => {
             playMelody();
-        });
-
-        // --- Photo Preview Handler ---
-        document.getElementById('camera-input').addEventListener('change', (e) => {
-            const previewContainer = document.getElementById('photo-preview');
-            const files = e.target.files;
-
-            for (let file of files) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    const img = document.createElement('img');
-                    img.src = event.target.result;
-                    img.className = 'photo-thumb';
-                    previewContainer.appendChild(img);
-                };
-                reader.readAsDataURL(file);
-            }
         });
     </script>
 </body>
