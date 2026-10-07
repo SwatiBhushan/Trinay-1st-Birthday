@@ -80,18 +80,6 @@
             transform: scale(1.05);
         }
 
-        .icon-btn.playing {
-            background: rgba(192, 132, 252, 0.4);
-            border-color: var(--gold-accent);
-            box-shadow: 0 0 12px rgba(252, 211, 77, 0.6);
-            animation: pulse-audio 1s infinite alternate ease-in-out;
-        }
-
-        @keyframes pulse-audio {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
-        }
-
         .hero-section {
             text-align: center;
             margin: 20px 0 35px 0;
@@ -109,8 +97,8 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: radial-gradient(circle at 35% 35%, #ffffff 0%, #f1f5f9 45%, #cbd5e1 75%, #94a3b8 100%);
-            box-shadow: 0 0 35px rgba(248, 250, 252, 0.8), 0 0 65px rgba(147, 197, 253, 0.4);
+            background: radial-gradient(circle at 35% 35%, #fffdf0 0%, #fae8a4 50%, #e2c068 85%, #b89235 100%);
+            box-shadow: 0 0 30px rgba(252, 211, 77, 0.6), 0 0 60px rgba(192, 132, 252, 0.3);
             position: relative;
             display: flex;
             align-items: center;
@@ -121,7 +109,7 @@
         /* Moon Crater Details */
         .moon-crater {
             position: absolute;
-            background: rgba(100, 116, 139, 0.2);
+            background: rgba(184, 146, 53, 0.2);
             border-radius: 50%;
         }
 
@@ -134,7 +122,7 @@
             font-size: 5rem;
             font-weight: 800;
             color: #121829;
-            text-shadow: 0px 2px 4px rgba(255, 255, 255, 0.6);
+            text-shadow: 0px 2px 4px rgba(255, 255, 255, 0.4);
             z-index: 2;
             line-height: 1;
         }
@@ -288,17 +276,14 @@
             box-shadow: 0 0 10px rgba(192, 132, 252, 0.3);
         }
 
-        /* Equal-Height Radio Buttons Fix for Mobile */
         .radio-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            align-items: stretch;
         }
 
         .radio-btn {
             position: relative;
-            height: 100%;
         }
 
         .radio-btn input {
@@ -309,25 +294,15 @@
 
         .radio-label {
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 12px 8px;
-            height: 100%;
+            padding: 12px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             cursor: pointer;
             font-weight: 700;
-            text-align: center;
             transition: all 0.3s ease;
-        }
-
-        .radio-subtext {
-            font-size: 0.75rem;
-            font-weight: 400;
-            opacity: 0.8;
-            margin-top: 2px;
         }
 
         .radio-btn input:checked + .radio-label {
@@ -346,12 +321,6 @@
             border: 1px solid var(--border-glow);
             border-radius: 12px;
             padding: 6px;
-            transition: opacity 0.3s ease;
-        }
-
-        .pax-control.disabled {
-            opacity: 0.4;
-            pointer-events: none;
         }
 
         .pax-btn {
@@ -452,7 +421,7 @@
             color: #f87171;
         }
 
-        /* Photo Upload Section */
+        /* Photo Upload Modal / Section */
         .photo-preview-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -468,7 +437,7 @@
             border: 1px solid var(--border-glow);
         }
 
-        /* Host Config Modal */
+        /* Config Modal */
         .modal {
             display: none;
             position: fixed;
@@ -609,23 +578,18 @@
                     <div class="radio-group">
                         <div class="radio-btn">
                             <input type="radio" id="rsvp-yes" name="attending" value="Yes" checked>
-                            <label for="rsvp-yes" class="radio-label">
-                                <span>✨ Yes, Excited!</span>
-                            </label>
+                            <label for="rsvp-yes" class="radio-label">✨ Yes, Excited!</label>
                         </div>
                         <div class="radio-btn">
                             <input type="radio" id="rsvp-no" name="attending" value="No">
-                            <label for="rsvp-no" class="radio-label">
-                                <span>🌙 Regretfully No</span>
-                                <span class="radio-subtext">Send Wishes</span>
-                            </label>
+                            <label for="rsvp-no" class="radio-label">🌙 Regretfully No</label>
                         </div>
                     </div>
                 </div>
 
-                <div class="form-group" id="pax-group">
+                <div class="form-group">
                     <label>Number of Guests (Pax)</label>
-                    <div class="pax-control" id="pax-control">
+                    <div class="pax-control">
                         <button type="button" class="pax-btn" id="pax-minus">−</button>
                         <span class="pax-count" id="pax-val">1</span>
                         <button type="button" class="pax-btn" id="pax-plus">+</button>
@@ -686,27 +650,23 @@
             GOOGLE_SCRIPT_URL: localStorage.getItem('google_script_url') || ''
         };
 
-        // --- High-DPI Canvas Animation with Shooting Stars ---
+        // --- Canvas Animation ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
-        let shootingStars = [];
-        let dpr = window.devicePixelRatio || 1;
 
         function resizeCanvas() {
-            dpr = window.devicePixelRatio || 1;
-            canvas.width = window.innerWidth * dpr;
-            canvas.height = window.innerHeight * dpr;
-            ctx.scale(dpr, dpr);
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         }
 
         function initStars() {
             stars = [];
-            const count = Math.floor((window.innerWidth * window.innerHeight) / 3000);
+            const count = Math.floor((canvas.width * canvas.height) / 3000);
             for (let i = 0; i < count; i++) {
                 stars.push({
-                    x: Math.random() * window.innerWidth,
-                    y: Math.random() * window.innerHeight,
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
                     radius: Math.random() * 1.5 + 0.5,
                     alpha: Math.random(),
                     speed: Math.random() * 0.02 + 0.005
@@ -714,29 +674,10 @@
             }
         }
 
-        // Helper to spawn a shooting star
-        function spawnShootingStar() {
-            const startX = Math.random() * (window.innerWidth * 0.8);
-            const startY = Math.random() * (window.innerHeight * 0.4);
-            const angle = (Math.PI / 6) + (Math.random() * Math.PI / 12); // ~30-45 degree angle
-            
-            shootingStars.push({
-                x: startX,
-                y: startY,
-                length: Math.random() * 80 + 60,
-                speed: Math.random() * 8 + 6,
-                dx: Math.cos(angle),
-                dy: Math.sin(angle),
-                alpha: 1,
-                decay: Math.random() * 0.015 + 0.01,
-                width: Math.random() * 1.5 + 1
-            });
-        }
-
         function drawCanvas() {
-            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // 1. Draw twinkling background stars
+            // Draw twinkling stars
             stars.forEach(star => {
                 star.alpha += star.speed;
                 if (star.alpha > 1 || star.alpha < 0) star.speed = -star.speed;
@@ -746,44 +687,6 @@
                 ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(star.alpha)})`;
                 ctx.fill();
             });
-
-            // 2. Randomly trigger a shooting star (approx. every 3-5 seconds)
-            if (Math.random() < 0.008 && shootingStars.length < 3) {
-                spawnShootingStar();
-            }
-
-            // 3. Draw and update shooting stars
-            for (let i = shootingStars.length - 1; i >= 0; i--) {
-                const ss = shootingStars[i];
-
-                // Calculate tail end point
-                const tailX = ss.x - ss.dx * ss.length;
-                const tailY = ss.y - ss.dy * ss.length;
-
-                // Gradient tail effect
-                const gradient = ctx.createLinearGradient(ss.x, ss.y, tailX, tailY);
-                gradient.addColorStop(0, `rgba(255, 255, 255, ${ss.alpha})`);
-                gradient.addColorStop(0.3, `rgba(192, 132, 252, ${ss.alpha * 0.6})`);
-                gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
-
-                ctx.beginPath();
-                ctx.moveTo(ss.x, ss.y);
-                ctx.lineTo(tailX, tailY);
-                ctx.strokeStyle = gradient;
-                ctx.lineWidth = ss.width;
-                ctx.lineCap = 'round';
-                ctx.stroke();
-
-                // Move shooting star forward
-                ss.x += ss.dx * ss.speed;
-                ss.y += ss.dy * ss.speed;
-                ss.alpha -= ss.decay;
-
-                // Remove faded or out-of-bounds shooting stars
-                if (ss.alpha <= 0 || ss.x > window.innerWidth + 100 || ss.y > window.innerHeight + 100) {
-                    shootingStars.splice(i, 1);
-                }
-            }
 
             requestAnimationFrame(drawCanvas);
         }
@@ -819,32 +722,15 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // --- Pax Count & Attending UI Logic ---
+        // --- Pax Count Selector ---
         let paxCount = 1;
         const paxVal = document.getElementById('pax-val');
-        const paxControl = document.getElementById('pax-control');
-        const rsvpYes = document.getElementById('rsvp-yes');
-        const rsvpNo = document.getElementById('rsvp-no');
-
         document.getElementById('pax-minus').addEventListener('click', () => {
             if (paxCount > 1) { paxCount--; paxVal.innerText = paxCount; }
         });
         document.getElementById('pax-plus').addEventListener('click', () => {
             if (paxCount < 10) { paxCount++; paxVal.innerText = paxCount; }
         });
-
-        function togglePaxUI() {
-            if (rsvpNo.checked) {
-                paxControl.classList.add('disabled');
-                paxVal.innerText = '0';
-            } else {
-                paxControl.classList.remove('disabled');
-                paxVal.innerText = paxCount;
-            }
-        }
-
-        rsvpYes.addEventListener('change', togglePaxUI);
-        rsvpNo.addEventListener('change', togglePaxUI);
 
         // --- RSVP Form Submission to Google Sheet ---
         const rsvpForm = document.getElementById('rsvp-form');
@@ -864,13 +750,12 @@
 
             const name = document.getElementById('guest-name').value.trim();
             const attending = document.querySelector('input[name="attending"]:checked').value;
-            const finalPax = attending === 'No' ? 0 : paxCount;
             const notes = document.getElementById('guest-notes').value.trim();
 
             const payload = {
                 name: name,
                 attending: attending,
-                pax: finalPax,
+                pax: paxCount,
                 notes: notes
             };
 
@@ -891,7 +776,7 @@
                 statusMsg.innerText = '✨ Thank you! Your RSVP has been saved to Google Sheets.';
                 rsvpForm.reset();
                 paxCount = 1;
-                togglePaxUI();
+                paxVal.innerText = 1;
 
             } catch (err) {
                 statusMsg.className = 'status-msg error';
@@ -905,25 +790,8 @@
         // --- Twinkle Twinkle Audio Synthesizer ---
         let audioCtx = null;
         let isPlaying = false;
-        let audioTimeout = null;
 
         const melody = [
-            { note: 261.63, duration: 0.4 }, { note: 261.63, duration: 0.4 },
-            { note: 392.00, duration: 0.4 }, { note: 392.00, duration: 0.4 },
-            { note: 440.00, duration: 0.4 }, { note: 440.00, duration: 0.4 },
-            { note: 392.00, duration: 0.8 },
-            { note: 349.23, duration: 0.4 }, { note: 349.23, duration: 0.4 },
-            { note: 329.63, duration: 0.4 }, { note: 329.63, duration: 0.4 },
-            { note: 293.66, duration: 0.4 }, { note: 293.66, duration: 0.4 },
-            { note: 261.63, duration: 0.8 },
-            { note: 392.00, duration: 0.4 }, { note: 392.00, duration: 0.4 },
-            { note: 349.23, duration: 0.4 }, { note: 349.23, duration: 0.4 },
-            { note: 329.63, duration: 0.4 }, { note: 329.63, duration: 0.4 },
-            { note: 293.66, duration: 0.8 },
-            { note: 392.00, duration: 0.4 }, { note: 392.00, duration: 0.4 },
-            { note: 349.23, duration: 0.4 }, { note: 349.23, duration: 0.4 },
-            { note: 329.63, duration: 0.4 }, { note: 329.63, duration: 0.4 },
-            { note: 293.66, duration: 0.8 },
             { note: 261.63, duration: 0.4 }, { note: 261.63, duration: 0.4 },
             { note: 392.00, duration: 0.4 }, { note: 392.00, duration: 0.4 },
             { note: 440.00, duration: 0.4 }, { note: 440.00, duration: 0.4 },
@@ -934,38 +802,9 @@
             { note: 261.63, duration: 0.8 }
         ];
 
-        const audioBtn = document.getElementById('audio-toggle');
-
-        function stopMelody() {
-            if (audioCtx) {
-                audioCtx.close();
-                audioCtx = null;
-            }
-            if (audioTimeout) {
-                clearTimeout(audioTimeout);
-            }
-            isPlaying = false;
-            audioBtn.classList.remove('playing');
-            audioBtn.innerText = '🎵';
-        }
-
         function playMelody() {
-            if (isPlaying) {
-                stopMelody();
-                return;
-            }
-
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-
-            isPlaying = true;
-            audioBtn.classList.add('playing');
-            audioBtn.innerText = '🔊';
-
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             let time = audioCtx.currentTime;
-            const totalDuration = melody.reduce((acc, item) => acc + item.duration, 0);
 
             melody.forEach(item => {
                 const osc = audioCtx.createOscillator();
@@ -974,8 +813,7 @@
                 osc.type = 'sine';
                 osc.frequency.setValueAtTime(item.note, time);
 
-                gain.gain.setValueAtTime(0.01, time);
-                gain.gain.linearRampToValueAtTime(0.15, time + 0.05);
+                gain.gain.setValueAtTime(0.15, time);
                 gain.gain.exponentialRampToValueAtTime(0.001, time + item.duration - 0.05);
 
                 osc.connect(gain);
@@ -986,13 +824,11 @@
 
                 time += item.duration;
             });
-
-            audioTimeout = setTimeout(() => {
-                stopMelody();
-            }, totalDuration * 1000);
         }
 
-        audioBtn.addEventListener('click', playMelody);
+        document.getElementById('audio-toggle').addEventListener('click', () => {
+            playMelody();
+        });
 
         // --- Photo Preview Handler ---
         document.getElementById('camera-input').addEventListener('change', (e) => {
