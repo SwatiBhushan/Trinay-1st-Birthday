@@ -1,526 +1,871 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trinay's 1st Birthday Invitation</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Sacramento&display=swap" rel="stylesheet">
-  
-  <style>
-    :root {
-      --bg-dark: #070B19;
-      --bg-card: rgba(15, 23, 42, 0.75);
-      --accent-gold: #F6D365;
-      --accent-lavender: #D8B4FE;
-      --accent-cyan: #38BDF8;
-      --text-main: #F8FAFC;
-      --text-muted: #94A3B8;
-      --border-glow: rgba(216, 180, 254, 0.25);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trinay's 1st Birthday Celebration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0e1a;
+            --navy-deep: #121829;
+            --pastel-purple: #c084fc;
+            --pastel-blue: #93c5fd;
+            --pastel-pink: #f472b6;
+            --gold-accent: #fcd34d;
+            --text-light: #f8fafc;
+            --card-bg: rgba(18, 24, 41, 0.75);
+            --border-glow: rgba(192, 132, 252, 0.3);
+        }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      overflow-x: hidden;
-      min-height: 100vh;
-      position: relative;
-    }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Nunito', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
 
-    canvas#skyCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
 
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px 16px 80px 16px;
-      position: relative;
-      z-index: 10;
-    }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px 16px 60px 16px;
+            position: relative;
+            z-index: 10;
+        }
 
-    /* Top Bar Settings & Audio Controls */
-    .top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
+        .top-nav {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px 0;
+        }
 
-    .icon-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
-      padding: 8px 14px;
-      border-radius: 20px;
-      cursor: pointer;
-      backdrop-filter: blur(8px);
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.3s ease;
-    }
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-glow);
+            color: var(--text-light);
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
 
-    .icon-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-color: var(--accent-gold);
-    }
+        .icon-btn:hover {
+            background: rgba(192, 132, 252, 0.25);
+            transform: scale(1.05);
+        }
 
-    /* Full Moon Hero Badge */
-    .hero-badge {
-      text-align: center;
-      margin: 20px 0 30px 0;
-      position: relative;
-    }
+        .hero-section {
+            text-align: center;
+            margin: 20px 0 35px 0;
+        }
 
-    .moon-container {
-      position: relative;
-      width: 190px;
-      height: 190px;
-      margin: 0 auto 20px auto;
-    }
+        /* Full Moon & Badge Container */
+        .moon-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 25px auto;
+        }
 
-    .full-moon {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #FFFDF0 0%, #FDF3C7 45%, #F59E0B 85%, #D97706 100%);
-      box-shadow: 0 0 40px rgba(253, 224, 71, 0.5), 0 0 80px rgba(245, 158, 11, 0.3);
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
+        .full-moon {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #fffdf0 0%, #fae8a4 50%, #e2c068 85%, #b89235 100%);
+            box-shadow: 0 0 30px rgba(252, 211, 77, 0.6), 0 0 60px rgba(192, 132, 252, 0.3);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
 
-    /* Crater Details */
-    .crater {
-      position: absolute;
-      background: rgba(217, 119, 6, 0.15);
-      border-radius: 50%;
-    }
-    .crater-1 { width: 35px; height: 35px; top: 20%; left: 20%; }
-    .crater-2 { width: 22px; height: 22px; bottom: 25%; left: 30%; }
-    .crater-3 { width: 40px; height: 40px; top: 50%; right: 15%; }
+        /* Moon Crater Details */
+        .moon-crater {
+            position: absolute;
+            background: rgba(184, 146, 53, 0.2);
+            border-radius: 50%;
+        }
 
-    /* Centered '1' */
-    .moon-number {
-      font-family: 'Cinzel', serif;
-      font-size: 5.5rem;
-      font-weight: 800;
-      color: #070B19;
-      text-shadow: 0 2px 4px rgba(255, 255, 255, 0.6);
-      z-index: 2;
-    }
+        .crater-1 { width: 35px; height: 35px; top: 20%; left: 20%; }
+        .crater-2 { width: 25px; height: 25px; bottom: 25%; left: 30%; }
+        .crater-3 { width: 45px; height: 45px; top: 40%; right: 15%; }
 
-    /* Attached Golden Star */
-    .side-star {
-      position: absolute;
-      top: -5px;
-      right: -5px;
-      font-size: 2.8rem;
-      filter: drop-shadow(0 0 12px #FDE047);
-      animation: float 3s ease-in-out infinite;
-      z-index: 3;
-    }
+        .moon-number {
+            font-family: 'Cinzel', serif;
+            font-size: 5rem;
+            font-weight: 800;
+            color: #121829;
+            text-shadow: 0px 2px 4px rgba(255, 255, 255, 0.4);
+            z-index: 2;
+            line-height: 1;
+        }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-8px) rotate(12deg); }
-    }
+        .side-star {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            font-size: 2.8rem;
+            color: var(--gold-accent);
+            filter: drop-shadow(0 0 10px rgba(252, 211, 77, 0.8));
+            animation: pulse-star 2s infinite alternate ease-in-out;
+            z-index: 3;
+        }
 
-    .title-sub {
-      font-family: 'Sacramento', cursive;
-      font-size: 2.2rem;
-      color: var(--accent-lavender);
-    }
+        @keyframes pulse-star {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.15) rotate(12deg); }
+        }
 
-    .title-main {
-      font-family: 'Cinzel', serif;
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      background: linear-gradient(135deg, #FFF, var(--accent-gold));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-top: -5px;
-    }
+        h1.title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--pastel-blue), var(--pastel-purple), var(--pastel-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
 
-    /* Cards */
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glow);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 20px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    }
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--pastel-blue);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
 
-    .card-title {
-      font-family: 'Cinzel', serif;
-      font-size: 1.2rem;
-      color: var(--accent-gold);
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
 
-    .event-info {
-      display: grid;
-      gap: 14px;
-      font-size: 0.95rem;
-    }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
 
-    .info-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-    .info-icon {
-      font-size: 1.3rem;
-      width: 32px;
-    }
+        .info-icon {
+            font-size: 1.5rem;
+            background: rgba(192, 132, 252, 0.15);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
 
-    /* Countdown Timer */
-    .timer-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      text-align: center;
-    }
+        .info-text label {
+            display: block;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-    .timer-block {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 10px;
-      border-radius: 12px;
-    }
+        .info-text span {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
 
-    .timer-num {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--accent-cyan);
-    }
+        /* Countdown Timer */
+        .countdown-title {
+            text-align: center;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--pastel-purple);
+            margin-bottom: 12px;
+        }
 
-    .timer-lbl {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-top: 2px;
-    }
+        .timer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            text-align: center;
+        }
 
-    /* RSVP Form */
-    .form-group {
-      margin-bottom: 16px;
-    }
+        .timer-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 10px 5px;
+        }
 
-    label {
-      display: block;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
+        .timer-num {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold-accent);
+        }
 
-    input[type="text"], textarea {
-      width: 100%;
-      padding: 12px;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 10px;
-      color: #fff;
-      font-size: 0.95rem;
-      outline: none;
-    }
+        .timer-unit {
+            font-size: 0.65rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
 
-    input[type="text"]:focus, textarea:focus {
-      border-color: var(--accent-lavender);
-    }
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 18px;
+        }
 
-    /* Attending Toggle */
-    .rsvp-toggle {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--pastel-blue);
+        }
 
-    .toggle-btn {
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      background: rgba(0, 0, 0, 0.2);
-      color: #fff;
-      cursor: pointer;
-      text-align: center;
-      font-weight: 600;
-      transition: all 0.2s ease;
-    }
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: border 0.3s ease;
+        }
 
-    .toggle-btn.active-yes {
-      background: rgba(34, 197, 94, 0.25);
-      border-color: #22C55E;
-      color: #4ADE80;
-    }
+        .form-input:focus {
+            border-color: var(--pastel-purple);
+            box-shadow: 0 0 10px rgba(192, 132, 252, 0.3);
+        }
 
-    .toggle-btn.active-no {
-      background: rgba(239, 68, 68, 0.25);
-      border-color: #EF4444;
-      color: #F87171;
-    }
+        .radio-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
 
-    /* Pax Counter */
-    .pax-control {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
+        .radio-btn {
+            position: relative;
+        }
 
-    .pax-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
+        .radio-btn input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
 
-    .pax-val {
-      font-size: 1.2rem;
-      font-weight: 700;
-    }
+        .radio-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
 
-    /* Buttons */
-    .btn-submit {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent-gold), #F59E0B);
-      color: #070B19;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
-      margin-top: 10px;
-    }
+        .radio-btn input:checked + .radio-label {
+            background: rgba(192, 132, 252, 0.25);
+            border-color: var(--pastel-purple);
+            color: #fff;
+            box-shadow: 0 0 12px rgba(192, 132, 252, 0.4);
+        }
 
-    .btn-map {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      background: rgba(56, 189, 248, 0.15);
-      border: 1px solid var(--accent-cyan);
-      color: var(--accent-cyan);
-      text-decoration: none;
-      font-weight: 600;
-      margin-top: 10px;
-    }
+        /* Pax Selector */
+        .pax-control {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 6px;
+        }
 
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
+        .pax-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(192, 132, 252, 0.2);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
 
-    .modal-content {
-      background: #0F172A;
-      border: 1px solid var(--border-glow);
-      border-radius: 16px;
-      padding: 20px;
-      width: 100%;
-      max-width: 400px;
-    }
-  </style>
+        .pax-btn:hover {
+            background: rgba(192, 132, 252, 0.4);
+        }
+
+        .pax-count {
+            font-size: 1.2rem;
+            font-weight: 700;
+            width: 60px;
+            text-align: center;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--pastel-purple), #8b5cf6);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2deg);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.6);
+        }
+
+        .btn-secondary {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Status Toast */
+        .status-msg {
+            display: none;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 12px;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status-msg.success {
+            display: block;
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.5);
+            color: #4ade80;
+        }
+
+        .status-msg.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #f87171;
+        }
+
+        /* Photo Upload Modal / Section */
+        .photo-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .photo-thumb {
+            width: 100%;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid var(--border-glow);
+        }
+
+        /* Config Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--navy-deep);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 24px;
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
-  <canvas id="skyCanvas"></canvas>
+    <canvas id="bg-canvas"></canvas>
 
-  <div class="container">
-    
-    <!-- Top Action Bar -->
-    <div class="top-bar">
-      <button class="icon-btn" onclick="toggleAudio()">
-        <span id="audioIcon">🎵</span> <span id="audioText">Play Lullaby</span>
-      </button>
-      <button class="icon-btn" onclick="openSettings()">
-        ⚙️ Settings
-      </button>
+    <div class="container">
+        
+        <!-- Top Navigation Icons -->
+        <div class="top-nav">
+            <button class="icon-btn" id="audio-toggle" title="Play Twinkle Twinkle Melody">🎵</button>
+            <button class="icon-btn" id="settings-toggle" title="Host Configuration" style="margin-left: 10px;">⚙️</button>
+        </div>
+
+        <!-- Hero Banner -->
+        <div class="hero-section">
+            <div class="moon-container">
+                <div class="full-moon">
+                    <div class="moon-crater crater-1"></div>
+                    <div class="moon-crater crater-2"></div>
+                    <div class="moon-crater crater-3"></div>
+                    <div class="moon-number">1</div>
+                </div>
+                <div class="side-star">⭐</div>
+            </div>
+            <h1 class="title">Trinay's 1st Birthday</h1>
+            <p class="subtitle">Little Star is Turning One</p>
+        </div>
+
+        <!-- Date & Location Details -->
+        <div class="card">
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-icon">📅</div>
+                    <div class="info-text">
+                        <label>Date</label>
+                        <span>Sunday, 11 Oct</span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">🕕</div>
+                    <div class="info-text">
+                        <label>Time</label>
+                        <span>6:00 PM Onwards</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-item" style="margin-bottom: 20px;">
+                <div class="info-icon">📍</div>
+                <div class="info-text">
+                    <label>Venue</label>
+                    <span>Eden Park, Cunningham Road</span>
+                </div>
+            </div>
+
+            <!-- Google Maps Link -->
+            <a href="https://maps.google.com/?q=Eden+Park+Cunningham+Road" target="_blank" class="btn-secondary">
+                🗺️ Open in Google Maps
+            </a>
+        </div>
+
+        <!-- Countdown Timer -->
+        <div class="card">
+            <div class="countdown-title">Countdown to Celebration</div>
+            <div class="timer-grid">
+                <div class="timer-box">
+                    <div class="timer-num" id="days">00</div>
+                    <div class="timer-unit">Days</div>
+                </div>
+                <div class="timer-box">
+                    <div class="timer-num" id="hours">00</div>
+                    <div class="timer-unit">Hours</div>
+                </div>
+                <div class="timer-box">
+                    <div class="timer-num" id="minutes">00</div>
+                    <div class="timer-unit">Mins</div>
+                </div>
+                <div class="timer-box">
+                    <div class="timer-num" id="seconds">00</div>
+                    <div class="timer-unit">Secs</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RSVP Form -->
+        <div class="card">
+            <h2 style="font-family: 'Cinzel', serif; margin-bottom: 18px; font-size: 1.4rem; text-align: center; color: var(--pastel-purple);">
+                RSVP Response
+            </h2>
+            <form id="rsvp-form">
+                
+                <div class="form-group">
+                    <label for="guest-name">Guest Name</label>
+                    <input type="text" id="guest-name" class="form-input" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Will you be attending?</label>
+                    <div class="radio-group">
+                        <div class="radio-btn">
+                            <input type="radio" id="rsvp-yes" name="attending" value="Yes" checked>
+                            <label for="rsvp-yes" class="radio-label">✨ Yes, Excited!</label>
+                        </div>
+                        <div class="radio-btn">
+                            <input type="radio" id="rsvp-no" name="attending" value="No">
+                            <label for="rsvp-no" class="radio-label">🌙 Regretfully No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Number of Guests (Pax)</label>
+                    <div class="pax-control">
+                        <button type="button" class="pax-btn" id="pax-minus">−</button>
+                        <span class="pax-count" id="pax-val">1</span>
+                        <button type="button" class="pax-btn" id="pax-plus">+</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="guest-notes">Special Note / Wishes (Optional)</label>
+                    <input type="text" id="guest-notes" class="form-input" placeholder="Any dietary preferences or wishes">
+                </div>
+
+                <button type="submit" class="btn-primary" id="submit-btn">
+                    💌 Submit RSVP to Google Sheet
+                </button>
+
+                <div id="status-msg" class="status-msg"></div>
+            </form>
+        </div>
+
+        <!-- Memory Capture & Photo Upload -->
+        <div class="card">
+            <h2 style="font-family: 'Cinzel', serif; margin-bottom: 12px; font-size: 1.3rem; text-align: center; color: var(--pastel-blue);">
+                📷 Event Memories
+            </h2>
+            <p style="text-align: center; font-size: 0.85rem; color: #94a3b8; margin-bottom: 15px;">
+                Snap and upload your memories during or after the party!
+            </p>
+            
+            <input type="file" id="camera-input" accept="image/*" capture="environment" style="display: none;" multiple>
+            <button class="btn-secondary" onclick="document.getElementById('camera-input').click()">
+                📸 Snap / Select Photos
+            </button>
+
+            <div class="photo-preview-grid" id="photo-preview"></div>
+        </div>
+
     </div>
 
-    <!-- Hero Full Moon Header -->
-    <div class="hero-badge">
-      <div class="moon-container">
-        <div class="full-moon">
-          <div class="crater crater-1"></div>
-          <div class="crater crater-2"></div>
-          <div class="crater crater-3"></div>
-          <span class="moon-number">1</span>
+    <!-- Host Settings Modal -->
+    <div class="modal" id="settings-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <h3 style="font-family: 'Cinzel', serif; margin-bottom: 15px; color: var(--pastel-purple);">Host Configuration</h3>
+            
+            <div class="form-group">
+                <label for="script-url">Google Apps Script Web App URL</label>
+                <input type="text" id="script-url" class="form-input" placeholder="https://script.google.com/macros/s/.../exec">
+            </div>
+
+            <button class="btn-primary" id="save-settings">Save Settings</button>
         </div>
-        <div class="side-star">⭐</div>
-      </div>
-      <div class="title-sub">You're invited to celebrate</div>
-      <div class="title-main">Trinay's 1st Birthday</div>
     </div>
 
-    <!-- Event Details Card -->
-    <div class="card">
-      <div class="card-title">📅 Date & Venue</div>
-      <div class="event-info">
-        <div class="info-row">
-          <span class="info-icon">🗓️</span>
-          <div>
-            <strong>Sunday, 11 October 2026</strong>
-          </div>
-        </div>
-        <div class="info-row">
-          <span class="info-icon">🕕</span>
-          <div>
-            <strong>6:00 PM onwards</strong>
-          </div>
-        </div>
-        <div class="info-row">
-          <span class="info-icon">📍</span>
-          <div>
-            <strong>Eden Park</strong><br>
-            <span style="color: var(--text-muted); font-size: 0.85rem;">Cunningham Road, Bengaluru</span>
-          </div>
-        </div>
-      </div>
+    <script>
+        // Default Configuration
+        const CONFIG = {
+            TARGET_DATE: new Date("October 11, 2026 18:00:00").getTime(),
+            GOOGLE_SCRIPT_URL: localStorage.getItem('google_script_url') || ''
+        };
 
-      <a href="https://maps.google.com/?q=Eden+Park+Cunningham+Road+Bengaluru" target="_blank" class="btn-map">
-        📍 Open in Google Maps
-      </a>
-    </div>
+        // --- Canvas Animation ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
 
-    <!-- Countdown Timer Card -->
-    <div class="card">
-      <div class="card-title">⏳ Countdown to the Party</div>
-      <div class="timer-grid">
-        <div class="timer-block">
-          <div class="timer-num" id="d">00</div>
-          <div class="timer-lbl">Days</div>
-        </div>
-        <div class="timer-block">
-          <div class="timer-num" id="h">00</div>
-          <div class="timer-lbl">Hours</div>
-        </div>
-        <div class="timer-block">
-          <div class="timer-num" id="m">00</div>
-          <div class="timer-lbl">Mins</div>
-        </div>
-        <div class="timer-block">
-          <div class="timer-num" id="s">00</div>
-          <div class="timer-lbl">Secs</div>
-        </div>
-      </div>
-    </div>
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
 
-    <!-- RSVP Form Card -->
-    <div class="card">
-      <div class="card-title">💌 RSVP Response</div>
-      
-      <form id="rsvpForm" onsubmit="submitRSVP(event)">
-        <div class="form-group">
-          <label>Your Name *</label>
-          <input type="text" id="guestName" placeholder="Enter full name" required>
-        </div>
+        function initStars() {
+            stars = [];
+            const count = Math.floor((canvas.width * canvas.height) / 3000);
+            for (let i = 0; i < count; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 1.5 + 0.5,
+                    alpha: Math.random(),
+                    speed: Math.random() * 0.02 + 0.005
+                });
+            }
+        }
 
-        <div class="form-group">
-          <label>Will you join us?</label>
-          <div class="rsvp-toggle">
-            <button type="button" class="toggle-btn active-yes" id="btnYes" onclick="setAttending(true)">Yes, I'll be there!</button>
-            <button type="button" class="toggle-btn" id="btnNo" onclick="setAttending(false)">Regretfully No</button>
-          </div>
-        </div>
+        function drawCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw twinkling stars
+            stars.forEach(star => {
+                star.alpha += star.speed;
+                if (star.alpha > 1 || star.alpha < 0) star.speed = -star.speed;
 
-        <div class="form-group" id="paxGroup">
-          <label>Number of Pax (Guests)</label>
-          <div class="pax-control">
-            <button type="button" class="pax-btn" onclick="adjustPax(-1)">-</button>
-            <span class="pax-val" id="paxCount">1</span>
-            <button type="button" class="pax-btn" onclick="adjustPax(1)">+</button>
-          </div>
-        </div>
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(star.alpha)})`;
+                ctx.fill();
+            });
 
-        <div class="form-group">
-          <label>Message / Notes (Optional)</label>
-          <textarea id="notes" rows="2" placeholder="Wishes or dietary preferences..."></textarea>
-        </div>
+            requestAnimationFrame(drawCanvas);
+        }
 
-        <button type="submit" class="btn-submit" id="submitBtn">Submit RSVP</button>
-      </form>
-    </div>
+        window.addEventListener('resize', () => { resizeCanvas(); initStars(); });
+        resizeCanvas();
+        initStars();
+        drawCanvas();
 
-  </div>
+        // --- Countdown Timer ---
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = CONFIG.TARGET_DATE - now;
 
-  <!-- Settings Modal -->
-  <div class="modal" id="settingsModal">
-    <div class="modal-content">
-      <h3 style="color: var(--accent-gold); margin-bottom: 12px;">⚙️ Host Configuration</h3>
-      <div class="form-group">
-        <label>Google Apps Script Web App URL</label>
-        <input type="text" id="scriptUrl" placeholder="https://script.google.com/macros/s/.../exec">
-      </div>
-      <div class="form-group">
-        <label>Host Phone Number (WhatsApp fallback)</label>
-        <input type="text" id="hostPhone" placeholder="e.g. 919876543210">
-      </div>
-      <button class="btn-submit" onclick="saveSettings()">Save Configuration</button>
-    </div>
-  </div>
+            if (distance < 0) {
+                document.getElementById('days').innerText = "00";
+                document.getElementById('hours').innerText = "00";
+                document.getElementById('minutes').innerText = "00";
+                document.getElementById('seconds').innerText = "00";
+                return;
+            }
 
-  <script>
-    // Starry Background Canvas Animation
-    const canvas = document.getElementById('skyCanvas');
-    const ctx = canvas.getContext('2d');
-    let stars = [];
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      initStars();
-    }
+            document.getElementById('days').innerText = String(days).padStart(2, '0');
+            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
 
-    function initStars() {
-      stars = [];
-      const count = Math.floor((canvas.width * canvas.height) / 3000);
-      for (let i = 0; i < count; i++) {
-        stars.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          radius: Math.random() * 1.5,
-          alpha: Math.random(),
-          speed: 0.005 + Math.random() * 0.015
+        // --- Pax Count Selector ---
+        let paxCount = 1;
+        const paxVal = document.getElementById('pax-val');
+        document.getElementById('pax-minus').addEventListener('click', () => {
+            if (paxCount > 1) { paxCount--; paxVal.innerText = paxCount; }
+        });
+        document.getElementById('pax-plus').addEventListener('click', () => {
+            if (paxCount < 10) { paxCount++; paxVal.innerText = paxCount; }
+        });
+
+        // --- RSVP Form Submission to Google Sheet ---
+        const rsvpForm = document.getElementById('rsvp-form');
+        const statusMsg = document.getElementById('status-msg');
+        const submitBtn = document.getElementById('submit-btn');
+
+        rsvpForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const scriptUrl = CONFIG.GOOGLE_SCRIPT_URL || localStorage.getItem('google_script_url');
+            
+            if (!scriptUrl) {
+                statusMsg.className = 'status-msg error';
+                statusMsg.innerText = '⚠️ Please configure your Google Apps Script URL in Host Settings (⚙️).';
+                return;
+            }
+
+            const name = document.getElementById('guest-name').value.trim();
+            const attending = document.querySelector('input[name="attending"]:checked').value;
+            const notes = document.getElementById('guest-notes').value.trim();
+
+            const payload = {
+                name: name,
+                attending: attending,
+                pax: paxCount,
+                notes: notes
+            };
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Submitting...';
+            statusMsg.className = 'status-msg';
+            statusMsg.innerText = '';
+
+            try {
+                await fetch(scriptUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                statusMsg.className = 'status-msg success';
+                statusMsg.innerText = '✨ Thank you! Your RSVP has been saved to Google Sheets.';
+                rsvpForm.reset();
+                paxCount = 1;
+                paxVal.innerText = 1;
+
+            } catch (err) {
+                statusMsg.className = 'status-msg error';
+                statusMsg.innerText = '❌ Failed to submit RSVP. Please try again.';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = '💌 Submit RSVP to Google Sheet';
+            }
+        });
+
+        // --- Twinkle Twinkle Audio Synthesizer ---
+        let audioCtx = null;
+        let isPlaying = false;
+
+        const melody = [
+            { note: 261.63, duration: 0.4 }, { note: 261.63, duration: 0.4 },
+            { note: 392.00, duration: 0.4 }, { note: 392.00, duration: 0.4 },
+            { note: 440.00, duration: 0.4 }, { note: 440.00, duration: 0.4 },
+            { note: 392.00, duration: 0.8 },
+            { note: 349.23, duration: 0.4 }, { note: 349.23, duration: 0.4 },
+            { note: 329.63, duration: 0.4 }, { note: 329.63, duration: 0.4 },
+            { note: 293.66, duration: 0.4 }, { note: 293.66, duration: 0.4 },
+            { note: 261.63, duration: 0.8 }
+        ];
+
+        function playMelody() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            let time = audioCtx.currentTime;
+
+            melody.forEach(item => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(item.note, time);
+
+                gain.gain.setValueAtTime(0.15, time);
+                gain.gain.exponentialRampToValueAtTime(0.001, time + item.duration - 0.05);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(time);
+                osc.stop(time + item.duration);
+
+                time += item.duration;
+            });
+        }
+
+        document.getElementById('audio-toggle').addEventListener('click', () => {
+            playMelody();
+        });
+
+        // --- Photo Preview Handler ---
+        document.getElementById('camera-input').addEventListener('change', (e) => {
+            const previewContainer = document.getElementById('photo-preview');
+            const files = e.target.files;
+
+            for (let file of files) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const img = document.createElement('img');
+                    img.src = event.target.result;
+                    img.className = 'photo-thumb';
+                    previewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // --- Settings Modal ---
+        const modal = document.getElementById('settings-modal');
+        const scriptInput = document.getElementById('script-url');
+
+        document.getElementById('settings-toggle').addEventListener('click', () => {
+            scriptInput.value = localStorage.getItem('google_script_url') || '';
+            modal.classList.add('active');
+        });
+
+        document.getElementById('modal-close').addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        document.getElementById('save-settings').addEventListener('click', () => {
+            localStorage.setItem('google_script_url', scriptInput.value.trim());
+            CONFIG.GOOGLE_SCRIPT_URL = scriptInput.value.trim();
+            modal.classList.remove('active');
+            alert('Settings saved!');
+        });
+    </script>
+</body>
+</html>
