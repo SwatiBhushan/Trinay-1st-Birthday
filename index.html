@@ -80,6 +80,18 @@
             transform: scale(1.05);
         }
 
+        .icon-btn.playing {
+            background: rgba(192, 132, 252, 0.4);
+            border-color: var(--gold-accent);
+            box-shadow: 0 0 12px rgba(252, 211, 77, 0.6);
+            animation: pulse-audio 1s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulse-audio {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
         .hero-section {
             text-align: center;
             margin: 20px 0 35px 0;
@@ -97,8 +109,8 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: radial-gradient(circle at 35% 35%, #fffdf0 0%, #fae8a4 50%, #e2c068 85%, #b89235 100%);
-            box-shadow: 0 0 30px rgba(252, 211, 77, 0.6), 0 0 60px rgba(192, 132, 252, 0.3);
+            background: radial-gradient(circle at 35% 35%, #ffffff 0%, #f1f5f9 45%, #cbd5e1 80%, #94a3b8 100%);
+            box-shadow: 0 0 35px rgba(255, 255, 255, 0.8), 0 0 70px rgba(192, 132, 252, 0.4), inset -10px -10px 20px rgba(148, 163, 184, 0.5);
             position: relative;
             display: flex;
             align-items: center;
@@ -109,8 +121,9 @@
         /* Moon Crater Details */
         .moon-crater {
             position: absolute;
-            background: rgba(184, 146, 53, 0.2);
+            background: rgba(148, 163, 184, 0.25);
             border-radius: 50%;
+            box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.15);
         }
 
         .crater-1 { width: 35px; height: 35px; top: 20%; left: 20%; }
@@ -121,8 +134,8 @@
             font-family: 'Cinzel', serif;
             font-size: 5rem;
             font-weight: 800;
-            color: #121829;
-            text-shadow: 0px 2px 4px rgba(255, 255, 255, 0.4);
+            color: #0f172a;
+            text-shadow: 0px 2px 6px rgba(255, 255, 255, 0.8);
             z-index: 2;
             line-height: 1;
         }
@@ -294,6 +307,7 @@
 
         .radio-label {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 12px;
@@ -303,6 +317,13 @@
             cursor: pointer;
             font-weight: 700;
             transition: all 0.3s ease;
+        }
+
+        .radio-subtext {
+            font-size: 0.75rem;
+            font-weight: 400;
+            opacity: 0.8;
+            margin-top: 2px;
         }
 
         .radio-btn input:checked + .radio-label {
@@ -321,6 +342,12 @@
             border: 1px solid var(--border-glow);
             border-radius: 12px;
             padding: 6px;
+            transition: opacity 0.3s ease;
+        }
+
+        .pax-control.disabled {
+            opacity: 0.4;
+            pointer-events: none;
         }
 
         .pax-btn {
@@ -420,62 +447,6 @@
             border: 1px solid rgba(239, 68, 68, 0.5);
             color: #f87171;
         }
-
-        /* Photo Upload Modal / Section */
-        .photo-preview-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-top: 15px;
-        }
-
-        .photo-thumb {
-            width: 100%;
-            height: 80px;
-            border-radius: 8px;
-            object-fit: cover;
-            border: 1px solid var(--border-glow);
-        }
-
-        /* Config Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 100;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--navy-deep);
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            padding: 24px;
-            width: 100%;
-            max-width: 450px;
-            position: relative;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
@@ -487,7 +458,6 @@
         <!-- Top Navigation Icons -->
         <div class="top-nav">
             <button class="icon-btn" id="audio-toggle" title="Play Twinkle Twinkle Melody">🎵</button>
-            <button class="icon-btn" id="settings-toggle" title="Host Configuration" style="margin-left: 10px;">⚙️</button>
         </div>
 
         <!-- Hero Banner -->
@@ -502,7 +472,7 @@
                 <div class="side-star">⭐</div>
             </div>
             <h1 class="title">Trinay's 1st Birthday</h1>
-            <p class="subtitle">Little Star is Turning One</p>
+            <p class="subtitle">Our Little Star is Turning One</p>
         </div>
 
         <!-- Date & Location Details -->
@@ -582,91 +552,60 @@
                         </div>
                         <div class="radio-btn">
                             <input type="radio" id="rsvp-no" name="attending" value="No">
-                            <label for="rsvp-no" class="radio-label">🌙 Regretfully No</label>
+                            <label for="rsvp-no" class="radio-label">
+                                <span>🌙 Regretfully No</span>
+                                <span class="radio-subtext">Send Wishes</span>
+                            </label>
                         </div>
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="pax-group">
                     <label>Number of Guests (Pax)</label>
-                    <div class="pax-control">
+                    <div class="pax-control" id="pax-control">
                         <button type="button" class="pax-btn" id="pax-minus">−</button>
                         <span class="pax-count" id="pax-val">1</span>
                         <button type="button" class="pax-btn" id="pax-plus">+</button>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="guest-notes">Special Note / Wishes (Optional)</label>
-                    <input type="text" id="guest-notes" class="form-input" placeholder="Any dietary preferences or wishes">
-                </div>
-
                 <button type="submit" class="btn-primary" id="submit-btn">
-                    💌 Submit RSVP to Google Sheet
+                    💌 Submit RSVP
                 </button>
 
                 <div id="status-msg" class="status-msg"></div>
             </form>
         </div>
 
-        <!-- Memory Capture & Photo Upload -->
-        <div class="card">
-            <h2 style="font-family: 'Cinzel', serif; margin-bottom: 12px; font-size: 1.3rem; text-align: center; color: var(--pastel-blue);">
-                📷 Event Memories
-            </h2>
-            <p style="text-align: center; font-size: 0.85rem; color: #94a3b8; margin-bottom: 15px;">
-                Snap and upload your memories during or after the party!
-            </p>
-            
-            <input type="file" id="camera-input" accept="image/*" capture="environment" style="display: none;" multiple>
-            <button class="btn-secondary" onclick="document.getElementById('camera-input').click()">
-                📸 Snap / Select Photos
-            </button>
-
-            <div class="photo-preview-grid" id="photo-preview"></div>
-        </div>
-
-    </div>
-
-    <!-- Host Settings Modal -->
-    <div class="modal" id="settings-modal">
-        <div class="modal-content">
-            <button class="modal-close" id="modal-close">&times;</button>
-            <h3 style="font-family: 'Cinzel', serif; margin-bottom: 15px; color: var(--pastel-purple);">Host Configuration</h3>
-            
-            <div class="form-group">
-                <label for="script-url">Google Apps Script Web App URL</label>
-                <input type="text" id="script-url" class="form-input" placeholder="https://script.google.com/macros/s/.../exec">
-            </div>
-
-            <button class="btn-primary" id="save-settings">Save Settings</button>
-        </div>
     </div>
 
     <script>
         // Default Configuration
         const CONFIG = {
             TARGET_DATE: new Date("October 11, 2026 18:00:00").getTime(),
-            GOOGLE_SCRIPT_URL: localStorage.getItem('google_script_url') || ''
+            GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycby4lHQJH5Ym_UqcPU60iKN6f9u9P5_dyeRl20ayTJmaO2PMY_9SAvGNSjFnH8K1KTcr/exec'
         };
 
-        // --- Canvas Animation ---
+        // --- High-DPI Canvas Animation ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
+        let dpr = window.devicePixelRatio || 1;
 
         function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            dpr = window.devicePixelRatio || 1;
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            ctx.scale(dpr, dpr);
         }
 
         function initStars() {
             stars = [];
-            const count = Math.floor((canvas.width * canvas.height) / 3000);
+            const count = Math.floor((window.innerWidth * window.innerHeight) / 3000);
             for (let i = 0; i < count; i++) {
                 stars.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
+                    x: Math.random() * window.innerWidth,
+                    y: Math.random() * window.innerHeight,
                     radius: Math.random() * 1.5 + 0.5,
                     alpha: Math.random(),
                     speed: Math.random() * 0.02 + 0.005
@@ -675,7 +614,7 @@
         }
 
         function drawCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
             
             // Draw twinkling stars
             stars.forEach(star => {
@@ -722,9 +661,13 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // --- Pax Count Selector ---
+        // --- Pax Count & Attending Logic ---
         let paxCount = 1;
         const paxVal = document.getElementById('pax-val');
+        const paxControl = document.getElementById('pax-control');
+        const rsvpYes = document.getElementById('rsvp-yes');
+        const rsvpNo = document.getElementById('rsvp-no');
+
         document.getElementById('pax-minus').addEventListener('click', () => {
             if (paxCount > 1) { paxCount--; paxVal.innerText = paxCount; }
         });
@@ -732,7 +675,20 @@
             if (paxCount < 10) { paxCount++; paxVal.innerText = paxCount; }
         });
 
-        // --- RSVP Form Submission to Google Sheet ---
+        function togglePaxUI() {
+            if (rsvpNo.checked) {
+                paxControl.classList.add('disabled');
+                paxVal.innerText = '0';
+            } else {
+                paxControl.classList.remove('disabled');
+                paxVal.innerText = paxCount;
+            }
+        }
+
+        rsvpYes.addEventListener('change', togglePaxUI);
+        rsvpNo.addEventListener('change', togglePaxUI);
+
+        // --- RSVP Form Submission ---
         const rsvpForm = document.getElementById('rsvp-form');
         const statusMsg = document.getElementById('status-msg');
         const submitBtn = document.getElementById('submit-btn');
@@ -740,23 +696,14 @@
         rsvpForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const scriptUrl = CONFIG.GOOGLE_SCRIPT_URL || localStorage.getItem('google_script_url');
-            
-            if (!scriptUrl) {
-                statusMsg.className = 'status-msg error';
-                statusMsg.innerText = '⚠️ Please configure your Google Apps Script URL in Host Settings (⚙️).';
-                return;
-            }
-
             const name = document.getElementById('guest-name').value.trim();
             const attending = document.querySelector('input[name="attending"]:checked').value;
-            const notes = document.getElementById('guest-notes').value.trim();
+            const finalPax = attending === 'No' ? 0 : paxCount;
 
             const payload = {
                 name: name,
                 attending: attending,
-                pax: paxCount,
-                notes: notes
+                pax: finalPax
             };
 
             submitBtn.disabled = true;
@@ -765,7 +712,7 @@
             statusMsg.innerText = '';
 
             try {
-                await fetch(scriptUrl, {
+                await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
@@ -773,25 +720,42 @@
                 });
 
                 statusMsg.className = 'status-msg success';
-                statusMsg.innerText = '✨ Thank you! Your RSVP has been saved to Google Sheets.';
+                statusMsg.innerText = '✨ Thank you! Your RSVP has been submitted.';
                 rsvpForm.reset();
                 paxCount = 1;
-                paxVal.innerText = 1;
+                togglePaxUI();
 
             } catch (err) {
                 statusMsg.className = 'status-msg error';
                 statusMsg.innerText = '❌ Failed to submit RSVP. Please try again.';
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.innerText = '💌 Submit RSVP to Google Sheet';
+                submitBtn.innerText = '💌 Submit RSVP';
             }
         });
 
         // --- Twinkle Twinkle Audio Synthesizer ---
         let audioCtx = null;
         let isPlaying = false;
+        let audioTimeout = null;
 
         const melody = [
+            { note: 261.63, duration: 0.4 }, { note: 261.63, duration: 0.4 },
+            { note: 392.00, duration: 0.4 }, { note: 392.00, duration: 0.4 },
+            { note: 440.00, duration: 0.4 }, { note: 440.00, duration: 0.4 },
+            { note: 392.00, duration: 0.8 },
+            { note: 349.23, duration: 0.4 }, { note: 349.23, duration: 0.4 },
+            { note: 329.63, duration: 0.4 }, { note: 329.63, duration: 0.4 },
+            { note: 293.66, duration: 0.4 }, { note: 293.66, duration: 0.4 },
+            { note: 261.63, duration: 0.8 },
+            { note: 392.00, duration: 0.4 }, { note: 392.00, duration: 0.4 },
+            { note: 349.23, duration: 0.4 }, { note: 349.23, duration: 0.4 },
+            { note: 329.63, duration: 0.4 }, { note: 329.63, duration: 0.4 },
+            { note: 293.66, duration: 0.8 },
+            { note: 392.00, duration: 0.4 }, { note: 392.00, duration: 0.4 },
+            { note: 349.23, duration: 0.4 }, { note: 349.23, duration: 0.4 },
+            { note: 329.63, duration: 0.4 }, { note: 329.63, duration: 0.4 },
+            { note: 293.66, duration: 0.8 },
             { note: 261.63, duration: 0.4 }, { note: 261.63, duration: 0.4 },
             { note: 392.00, duration: 0.4 }, { note: 392.00, duration: 0.4 },
             { note: 440.00, duration: 0.4 }, { note: 440.00, duration: 0.4 },
@@ -802,9 +766,38 @@
             { note: 261.63, duration: 0.8 }
         ];
 
+        const audioBtn = document.getElementById('audio-toggle');
+
+        function stopMelody() {
+            if (audioCtx) {
+                audioCtx.close();
+                audioCtx = null;
+            }
+            if (audioTimeout) {
+                clearTimeout(audioTimeout);
+            }
+            isPlaying = false;
+            audioBtn.classList.remove('playing');
+            audioBtn.innerText = '🎵';
+        }
+
         function playMelody() {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (isPlaying) {
+                stopMelody();
+                return;
+            }
+
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            isPlaying = true;
+            audioBtn.classList.add('playing');
+            audioBtn.innerText = '🔊';
+
             let time = audioCtx.currentTime;
+            const totalDuration = melody.reduce((acc, item) => acc + item.duration, 0);
 
             melody.forEach(item => {
                 const osc = audioCtx.createOscillator();
@@ -813,7 +806,8 @@
                 osc.type = 'sine';
                 osc.frequency.setValueAtTime(item.note, time);
 
-                gain.gain.setValueAtTime(0.15, time);
+                gain.gain.setValueAtTime(0.01, time);
+                gain.gain.linearRampToValueAtTime(0.15, time + 0.05);
                 gain.gain.exponentialRampToValueAtTime(0.001, time + item.duration - 0.05);
 
                 osc.connect(gain);
@@ -824,48 +818,13 @@
 
                 time += item.duration;
             });
+
+            audioTimeout = setTimeout(() => {
+                stopMelody();
+            }, totalDuration * 1000);
         }
 
-        document.getElementById('audio-toggle').addEventListener('click', () => {
-            playMelody();
-        });
-
-        // --- Photo Preview Handler ---
-        document.getElementById('camera-input').addEventListener('change', (e) => {
-            const previewContainer = document.getElementById('photo-preview');
-            const files = e.target.files;
-
-            for (let file of files) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    const img = document.createElement('img');
-                    img.src = event.target.result;
-                    img.className = 'photo-thumb';
-                    previewContainer.appendChild(img);
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // --- Settings Modal ---
-        const modal = document.getElementById('settings-modal');
-        const scriptInput = document.getElementById('script-url');
-
-        document.getElementById('settings-toggle').addEventListener('click', () => {
-            scriptInput.value = localStorage.getItem('google_script_url') || '';
-            modal.classList.add('active');
-        });
-
-        document.getElementById('modal-close').addEventListener('click', () => {
-            modal.classList.remove('active');
-        });
-
-        document.getElementById('save-settings').addEventListener('click', () => {
-            localStorage.setItem('google_script_url', scriptInput.value.trim());
-            CONFIG.GOOGLE_SCRIPT_URL = scriptInput.value.trim();
-            modal.classList.remove('active');
-            alert('Settings saved!');
-        });
+        audioBtn.addEventListener('click', playMelody);
     </script>
 </body>
 </html>
