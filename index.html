@@ -6,15 +6,15 @@
     <title>Trinay's 1st Birthday Celebration</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Nunito:wght@400;600;700&family=Sacramento&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-dark: #0a0e1a;
             --navy-deep: #121829;
-            --pastel-purple: #c084fc;
+            --pastel-purple: #d8b4fe;
             --pastel-blue: #93c5fd;
             --pastel-pink: #f472b6;
-            --gold-accent: #fcd34d;
+            --gold-accent: #fde68a;
             --text-light: #f8fafc;
             --card-bg: rgba(18, 24, 41, 0.75);
             --border-glow: rgba(192, 132, 252, 0.3);
@@ -97,7 +97,6 @@
             margin: 20px 0 35px 0;
         }
 
-        /* Full Moon & Badge Container */
         .moon-container {
             position: relative;
             width: 180px;
@@ -118,7 +117,6 @@
             overflow: hidden;
         }
 
-        /* Moon Crater Details */
         .moon-crater {
             position: absolute;
             background: rgba(148, 163, 184, 0.25);
@@ -156,22 +154,24 @@
             100% { transform: scale(1.15) rotate(12deg); }
         }
 
-        h1.title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--pastel-blue), var(--pastel-purple), var(--pastel-pink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
+        .invite-message {
+            font-family: 'Sacramento', cursive;
+            font-size: 2.4rem;
+            color: var(--pastel-purple);
+            margin-bottom: 2px;
+            line-height: 1.2;
+            text-shadow: 0 0 12px rgba(216, 180, 254, 0.3);
         }
 
-        .subtitle {
-            font-size: 1.1rem;
-            color: var(--pastel-blue);
+        h1.title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: var(--gold-accent);
             letter-spacing: 2px;
             text-transform: uppercase;
-            font-weight: 600;
+            text-shadow: 0 0 15px rgba(253, 230, 138, 0.3);
+            margin-bottom: 8px;
         }
 
         .card {
@@ -223,7 +223,6 @@
             color: var(--text-light);
         }
 
-        /* Countdown Timer */
         .countdown-title {
             text-align: center;
             font-size: 0.85rem;
@@ -259,7 +258,6 @@
             text-transform: uppercase;
         }
 
-        /* Form Controls */
         .form-group {
             margin-bottom: 18px;
         }
@@ -333,7 +331,6 @@
             box-shadow: 0 0 12px rgba(192, 132, 252, 0.4);
         }
 
-        /* Pax Selector */
         .pax-control {
             display: flex;
             align-items: center;
@@ -376,7 +373,6 @@
             text-align: center;
         }
 
-        /* Buttons */
         .btn-primary {
             width: 100%;
             padding: 14px;
@@ -423,7 +419,6 @@
             background: rgba(255, 255, 255, 0.15);
         }
 
-        /* Status Toast */
         .status-msg {
             display: none;
             padding: 12px;
@@ -454,13 +449,10 @@
     <canvas id="bg-canvas"></canvas>
 
     <div class="container">
-        
-        <!-- Top Navigation Icons -->
         <div class="top-nav">
-            <button class="icon-btn" id="audio-toggle" title="Play Twinkle Twinkle Melody">🎵</button>
+            <button class="icon-btn" id="audio-toggle" title="Play Twinkle Twinkle Melody" aria-label="Toggle Melody">🎵</button>
         </div>
 
-        <!-- Hero Banner -->
         <div class="hero-section">
             <div class="moon-container">
                 <div class="full-moon">
@@ -471,11 +463,10 @@
                 </div>
                 <div class="side-star">⭐</div>
             </div>
-            <h1 class="title">Trinay's 1st Birthday</h1>
-            <p class="subtitle">Our Little Star is Turning One</p>
+            <p class="invite-message">You're invited to celebrate</p>
+            <h1 class="title">TRINAY'S 1ST BIRTHDAY</h1>
         </div>
 
-        <!-- Date & Location Details -->
         <div class="card">
             <div class="info-grid">
                 <div class="info-item">
@@ -502,13 +493,11 @@
                 </div>
             </div>
 
-            <!-- Google Maps Link -->
-            <a href="https://maps.google.com/?q=Eden+Park+Cunningham+Road" target="_blank" class="btn-secondary">
+            <a href="https://maps.google.com/?q=Eden+Park+Cunningham+Road" target="_blank" rel="noopener noreferrer" class="btn-secondary">
                 🗺️ Open in Google Maps
             </a>
         </div>
 
-        <!-- Countdown Timer -->
         <div class="card">
             <div class="countdown-title">Countdown to Celebration</div>
             <div class="timer-grid">
@@ -531,13 +520,11 @@
             </div>
         </div>
 
-        <!-- RSVP Form -->
         <div class="card">
             <h2 style="font-family: 'Cinzel', serif; margin-bottom: 18px; font-size: 1.4rem; text-align: center; color: var(--pastel-purple);">
                 RSVP Response
             </h2>
             <form id="rsvp-form">
-                
                 <div class="form-group">
                     <label for="guest-name">Guest Name</label>
                     <input type="text" id="guest-name" class="form-input" placeholder="Enter your full name" required>
@@ -563,9 +550,9 @@
                 <div class="form-group" id="pax-group">
                     <label>Number of Guests (Pax)</label>
                     <div class="pax-control" id="pax-control">
-                        <button type="button" class="pax-btn" id="pax-minus">−</button>
+                        <button type="button" class="pax-btn" id="pax-minus" aria-label="Decrease guest count">−</button>
                         <span class="pax-count" id="pax-val">1</span>
-                        <button type="button" class="pax-btn" id="pax-plus">+</button>
+                        <button type="button" class="pax-btn" id="pax-plus" aria-label="Increase guest count">+</button>
                     </div>
                 </div>
 
@@ -576,20 +563,19 @@
                 <div id="status-msg" class="status-msg"></div>
             </form>
         </div>
-
     </div>
 
     <script>
-        // Default Configuration
         const CONFIG = {
             TARGET_DATE: new Date("October 11, 2026 18:00:00").getTime(),
             GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycby4lHQJH5Ym_UqcPU60iKN6f9u9P5_dyeRl20ayTJmaO2PMY_9SAvGNSjFnH8K1KTcr/exec'
         };
 
-        // --- High-DPI Canvas Animation ---
+        // --- Canvas Animation (Stars + Shooting Stars) ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
+        let shootingStars = [];
         let dpr = window.devicePixelRatio || 1;
 
         function resizeCanvas() {
@@ -613,10 +599,24 @@
             }
         }
 
+        function spawnShootingStar() {
+            if (shootingStars.length < 3 && Math.random() < 0.03) {
+                shootingStars.push({
+                    x: Math.random() * window.innerWidth * 0.8,
+                    y: Math.random() * (window.innerHeight * 0.4),
+                    length: Math.random() * 80 + 50,
+                    speed: Math.random() * 8 + 6,
+                    angle: Math.PI / 4,
+                    opacity: 1,
+                    decay: Math.random() * 0.015 + 0.01
+                });
+            }
+        }
+
         function drawCanvas() {
             ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-            
-            // Draw twinkling stars
+
+            // Draw twinkling background stars
             stars.forEach(star => {
                 star.alpha += star.speed;
                 if (star.alpha > 1 || star.alpha < 0) star.speed = -star.speed;
@@ -626,6 +626,34 @@
                 ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(star.alpha)})`;
                 ctx.fill();
             });
+
+            // Handle shooting stars
+            spawnShootingStar();
+            for (let i = shootingStars.length - 1; i >= 0; i--) {
+                const ss = shootingStars[i];
+                const tailX = ss.x - Math.cos(ss.angle) * ss.length;
+                const tailY = ss.y - Math.sin(ss.angle) * ss.length;
+
+                const gradient = ctx.createLinearGradient(ss.x, ss.y, tailX, tailY);
+                gradient.addColorStop(0, `rgba(255, 255, 255, ${ss.opacity})`);
+                gradient.addColorStop(0.3, `rgba(216, 180, 254, ${ss.opacity * 0.8})`);
+                gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
+
+                ctx.beginPath();
+                ctx.moveTo(ss.x, ss.y);
+                ctx.lineTo(tailX, tailY);
+                ctx.strokeStyle = gradient;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                ss.x += Math.cos(ss.angle) * ss.speed;
+                ss.y += Math.sin(ss.angle) * ss.speed;
+                ss.opacity -= ss.decay;
+
+                if (ss.opacity <= 0 || ss.x > window.innerWidth || ss.y > window.innerHeight) {
+                    shootingStars.splice(i, 1);
+                }
+            }
 
             requestAnimationFrame(drawCanvas);
         }
@@ -637,9 +665,7 @@
 
         // --- Countdown Timer ---
         function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = CONFIG.TARGET_DATE - now;
-
+            const distance = CONFIG.TARGET_DATE - Date.now();
             if (distance < 0) {
                 document.getElementById('days').innerText = "00";
                 document.getElementById('hours').innerText = "00";
@@ -661,7 +687,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // --- Pax Count & Attending Logic ---
+        // --- Pax Count Logic ---
         let paxCount = 1;
         const paxVal = document.getElementById('pax-val');
         const paxControl = document.getElementById('pax-control');
@@ -688,7 +714,7 @@
         rsvpYes.addEventListener('change', togglePaxUI);
         rsvpNo.addEventListener('change', togglePaxUI);
 
-        // --- RSVP Form Submission ---
+        // --- RSVP Submission ---
         const rsvpForm = document.getElementById('rsvp-form');
         const statusMsg = document.getElementById('status-msg');
         const submitBtn = document.getElementById('submit-btn');
@@ -700,11 +726,7 @@
             const attending = document.querySelector('input[name="attending"]:checked').value;
             const finalPax = attending === 'No' ? 0 : paxCount;
 
-            const payload = {
-                name: name,
-                attending: attending,
-                pax: finalPax
-            };
+            const payload = { name, attending, pax: finalPax };
 
             submitBtn.disabled = true;
             submitBtn.innerText = 'Submitting...';
@@ -715,7 +737,7 @@
                 await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify(payload)
                 });
 
@@ -724,7 +746,6 @@
                 rsvpForm.reset();
                 paxCount = 1;
                 togglePaxUI();
-
             } catch (err) {
                 statusMsg.className = 'status-msg error';
                 statusMsg.innerText = '❌ Failed to submit RSVP. Please try again.';
@@ -734,28 +755,12 @@
             }
         });
 
-        // --- Twinkle Twinkle Audio Synthesizer ---
+        // --- Audio Synthesizer ---
         let audioCtx = null;
         let isPlaying = false;
         let audioTimeout = null;
 
         const melody = [
-            { note: 261.63, duration: 0.4 }, { note: 261.63, duration: 0.4 },
-            { note: 392.00, duration: 0.4 }, { note: 392.00, duration: 0.4 },
-            { note: 440.00, duration: 0.4 }, { note: 440.00, duration: 0.4 },
-            { note: 392.00, duration: 0.8 },
-            { note: 349.23, duration: 0.4 }, { note: 349.23, duration: 0.4 },
-            { note: 329.63, duration: 0.4 }, { note: 329.63, duration: 0.4 },
-            { note: 293.66, duration: 0.4 }, { note: 293.66, duration: 0.4 },
-            { note: 261.63, duration: 0.8 },
-            { note: 392.00, duration: 0.4 }, { note: 392.00, duration: 0.4 },
-            { note: 349.23, duration: 0.4 }, { note: 349.23, duration: 0.4 },
-            { note: 329.63, duration: 0.4 }, { note: 329.63, duration: 0.4 },
-            { note: 293.66, duration: 0.8 },
-            { note: 392.00, duration: 0.4 }, { note: 392.00, duration: 0.4 },
-            { note: 349.23, duration: 0.4 }, { note: 349.23, duration: 0.4 },
-            { note: 329.63, duration: 0.4 }, { note: 329.63, duration: 0.4 },
-            { note: 293.66, duration: 0.8 },
             { note: 261.63, duration: 0.4 }, { note: 261.63, duration: 0.4 },
             { note: 392.00, duration: 0.4 }, { note: 392.00, duration: 0.4 },
             { note: 440.00, duration: 0.4 }, { note: 440.00, duration: 0.4 },
@@ -773,9 +778,7 @@
                 audioCtx.close();
                 audioCtx = null;
             }
-            if (audioTimeout) {
-                clearTimeout(audioTimeout);
-            }
+            if (audioTimeout) clearTimeout(audioTimeout);
             isPlaying = false;
             audioBtn.classList.remove('playing');
             audioBtn.innerText = '🎵';
@@ -788,10 +791,6 @@
             }
 
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-
             isPlaying = true;
             audioBtn.classList.add('playing');
             audioBtn.innerText = '🔊';
@@ -819,9 +818,7 @@
                 time += item.duration;
             });
 
-            audioTimeout = setTimeout(() => {
-                stopMelody();
-            }, totalDuration * 1000);
+            audioTimeout = setTimeout(stopMelody, totalDuration * 1000);
         }
 
         audioBtn.addEventListener('click', playMelody);
