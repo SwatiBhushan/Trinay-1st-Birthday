@@ -109,8 +109,8 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: radial-gradient(circle at 35% 35%, #ffffff 0%, #f1f5f9 45%, #cbd5e1 80%, #94a3b8 100%);
-            box-shadow: 0 0 35px rgba(255, 255, 255, 0.8), 0 0 70px rgba(192, 132, 252, 0.4), inset -10px -10px 20px rgba(148, 163, 184, 0.5);
+            background: radial-gradient(circle at 35% 35%, #fffdf0 0%, #fae8a4 50%, #e2c068 85%, #b89235 100%);
+            box-shadow: 0 0 30px rgba(252, 211, 77, 0.6), 0 0 60px rgba(192, 132, 252, 0.3);
             position: relative;
             display: flex;
             align-items: center;
@@ -121,9 +121,8 @@
         /* Moon Crater Details */
         .moon-crater {
             position: absolute;
-            background: rgba(148, 163, 184, 0.25);
+            background: rgba(184, 146, 53, 0.2);
             border-radius: 50%;
-            box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.15);
         }
 
         .crater-1 { width: 35px; height: 35px; top: 20%; left: 20%; }
@@ -134,8 +133,8 @@
             font-family: 'Cinzel', serif;
             font-size: 5rem;
             font-weight: 800;
-            color: #0f172a;
-            text-shadow: 0px 2px 6px rgba(255, 255, 255, 0.8);
+            color: #121829;
+            text-shadow: 0px 2px 4px rgba(255, 255, 255, 0.4);
             z-index: 2;
             line-height: 1;
         }
@@ -289,14 +288,17 @@
             box-shadow: 0 0 10px rgba(192, 132, 252, 0.3);
         }
 
+        /* Equal-Height Radio Buttons Fix for Mobile */
         .radio-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
+            align-items: stretch;
         }
 
         .radio-btn {
             position: relative;
+            height: 100%;
         }
 
         .radio-btn input {
@@ -310,12 +312,14 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 12px;
+            padding: 12px 8px;
+            height: 100%;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             cursor: pointer;
             font-weight: 700;
+            text-align: center;
             transition: all 0.3s ease;
         }
 
@@ -447,6 +451,62 @@
             border: 1px solid rgba(239, 68, 68, 0.5);
             color: #f87171;
         }
+
+        /* Photo Upload Section */
+        .photo-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .photo-thumb {
+            width: 100%;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid var(--border-glow);
+        }
+
+        /* Host Config Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--navy-deep);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 24px;
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -458,6 +518,7 @@
         <!-- Top Navigation Icons -->
         <div class="top-nav">
             <button class="icon-btn" id="audio-toggle" title="Play Twinkle Twinkle Melody">🎵</button>
+            <button class="icon-btn" id="settings-toggle" title="Host Configuration" style="margin-left: 10px;">⚙️</button>
         </div>
 
         <!-- Hero Banner -->
@@ -472,7 +533,7 @@
                 <div class="side-star">⭐</div>
             </div>
             <h1 class="title">Trinay's 1st Birthday</h1>
-            <p class="subtitle">Our Little Star is Turning One</p>
+            <p class="subtitle">Little Star is Turning One</p>
         </div>
 
         <!-- Date & Location Details -->
@@ -548,7 +609,9 @@
                     <div class="radio-group">
                         <div class="radio-btn">
                             <input type="radio" id="rsvp-yes" name="attending" value="Yes" checked>
-                            <label for="rsvp-yes" class="radio-label">✨ Yes, Excited!</label>
+                            <label for="rsvp-yes" class="radio-label">
+                                <span>✨ Yes, Excited!</span>
+                            </label>
                         </div>
                         <div class="radio-btn">
                             <input type="radio" id="rsvp-no" name="attending" value="No">
@@ -569,27 +632,65 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="guest-notes">Special Note / Wishes (Optional)</label>
+                    <input type="text" id="guest-notes" class="form-input" placeholder="Any dietary preferences or wishes">
+                </div>
+
                 <button type="submit" class="btn-primary" id="submit-btn">
-                    💌 Submit RSVP
+                    💌 Submit RSVP to Google Sheet
                 </button>
 
                 <div id="status-msg" class="status-msg"></div>
             </form>
         </div>
 
+        <!-- Memory Capture & Photo Upload -->
+        <div class="card">
+            <h2 style="font-family: 'Cinzel', serif; margin-bottom: 12px; font-size: 1.3rem; text-align: center; color: var(--pastel-blue);">
+                📷 Event Memories
+            </h2>
+            <p style="text-align: center; font-size: 0.85rem; color: #94a3b8; margin-bottom: 15px;">
+                Snap and upload your memories during or after the party!
+            </p>
+            
+            <input type="file" id="camera-input" accept="image/*" capture="environment" style="display: none;" multiple>
+            <button class="btn-secondary" onclick="document.getElementById('camera-input').click()">
+                📸 Snap / Select Photos
+            </button>
+
+            <div class="photo-preview-grid" id="photo-preview"></div>
+        </div>
+
+    </div>
+
+    <!-- Host Settings Modal -->
+    <div class="modal" id="settings-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <h3 style="font-family: 'Cinzel', serif; margin-bottom: 15px; color: var(--pastel-purple);">Host Configuration</h3>
+            
+            <div class="form-group">
+                <label for="script-url">Google Apps Script Web App URL</label>
+                <input type="text" id="script-url" class="form-input" placeholder="https://script.google.com/macros/s/.../exec">
+            </div>
+
+            <button class="btn-primary" id="save-settings">Save Settings</button>
+        </div>
     </div>
 
     <script>
         // Default Configuration
         const CONFIG = {
             TARGET_DATE: new Date("October 11, 2026 18:00:00").getTime(),
-            GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycby4lHQJH5Ym_UqcPU60iKN6f9u9P5_dyeRl20ayTJmaO2PMY_9SAvGNSjFnH8K1KTcr/exec'
+            GOOGLE_SCRIPT_URL: localStorage.getItem('google_script_url') || ''
         };
 
-        // --- High-DPI Canvas Animation ---
+        // --- High-DPI Canvas Animation with Shooting Stars ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
+        let shootingStars = [];
         let dpr = window.devicePixelRatio || 1;
 
         function resizeCanvas() {
@@ -613,10 +714,29 @@
             }
         }
 
+        // Helper to spawn a shooting star
+        function spawnShootingStar() {
+            const startX = Math.random() * (window.innerWidth * 0.8);
+            const startY = Math.random() * (window.innerHeight * 0.4);
+            const angle = (Math.PI / 6) + (Math.random() * Math.PI / 12); // ~30-45 degree angle
+            
+            shootingStars.push({
+                x: startX,
+                y: startY,
+                length: Math.random() * 80 + 60,
+                speed: Math.random() * 8 + 6,
+                dx: Math.cos(angle),
+                dy: Math.sin(angle),
+                alpha: 1,
+                decay: Math.random() * 0.015 + 0.01,
+                width: Math.random() * 1.5 + 1
+            });
+        }
+
         function drawCanvas() {
             ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
             
-            // Draw twinkling stars
+            // 1. Draw twinkling background stars
             stars.forEach(star => {
                 star.alpha += star.speed;
                 if (star.alpha > 1 || star.alpha < 0) star.speed = -star.speed;
@@ -626,6 +746,44 @@
                 ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(star.alpha)})`;
                 ctx.fill();
             });
+
+            // 2. Randomly trigger a shooting star (approx. every 3-5 seconds)
+            if (Math.random() < 0.008 && shootingStars.length < 3) {
+                spawnShootingStar();
+            }
+
+            // 3. Draw and update shooting stars
+            for (let i = shootingStars.length - 1; i >= 0; i--) {
+                const ss = shootingStars[i];
+
+                // Calculate tail end point
+                const tailX = ss.x - ss.dx * ss.length;
+                const tailY = ss.y - ss.dy * ss.length;
+
+                // Gradient tail effect
+                const gradient = ctx.createLinearGradient(ss.x, ss.y, tailX, tailY);
+                gradient.addColorStop(0, `rgba(255, 255, 255, ${ss.alpha})`);
+                gradient.addColorStop(0.3, `rgba(192, 132, 252, ${ss.alpha * 0.6})`);
+                gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
+
+                ctx.beginPath();
+                ctx.moveTo(ss.x, ss.y);
+                ctx.lineTo(tailX, tailY);
+                ctx.strokeStyle = gradient;
+                ctx.lineWidth = ss.width;
+                ctx.lineCap = 'round';
+                ctx.stroke();
+
+                // Move shooting star forward
+                ss.x += ss.dx * ss.speed;
+                ss.y += ss.dy * ss.speed;
+                ss.alpha -= ss.decay;
+
+                // Remove faded or out-of-bounds shooting stars
+                if (ss.alpha <= 0 || ss.x > window.innerWidth + 100 || ss.y > window.innerHeight + 100) {
+                    shootingStars.splice(i, 1);
+                }
+            }
 
             requestAnimationFrame(drawCanvas);
         }
@@ -661,7 +819,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // --- Pax Count & Attending Logic ---
+        // --- Pax Count & Attending UI Logic ---
         let paxCount = 1;
         const paxVal = document.getElementById('pax-val');
         const paxControl = document.getElementById('pax-control');
@@ -688,7 +846,7 @@
         rsvpYes.addEventListener('change', togglePaxUI);
         rsvpNo.addEventListener('change', togglePaxUI);
 
-        // --- RSVP Form Submission ---
+        // --- RSVP Form Submission to Google Sheet ---
         const rsvpForm = document.getElementById('rsvp-form');
         const statusMsg = document.getElementById('status-msg');
         const submitBtn = document.getElementById('submit-btn');
@@ -696,14 +854,24 @@
         rsvpForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            const scriptUrl = CONFIG.GOOGLE_SCRIPT_URL || localStorage.getItem('google_script_url');
+            
+            if (!scriptUrl) {
+                statusMsg.className = 'status-msg error';
+                statusMsg.innerText = '⚠️ Please configure your Google Apps Script URL in Host Settings (⚙️).';
+                return;
+            }
+
             const name = document.getElementById('guest-name').value.trim();
             const attending = document.querySelector('input[name="attending"]:checked').value;
             const finalPax = attending === 'No' ? 0 : paxCount;
+            const notes = document.getElementById('guest-notes').value.trim();
 
             const payload = {
                 name: name,
                 attending: attending,
-                pax: finalPax
+                pax: finalPax,
+                notes: notes
             };
 
             submitBtn.disabled = true;
@@ -712,7 +880,7 @@
             statusMsg.innerText = '';
 
             try {
-                await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+                await fetch(scriptUrl, {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
@@ -720,7 +888,7 @@
                 });
 
                 statusMsg.className = 'status-msg success';
-                statusMsg.innerText = '✨ Thank you! Your RSVP has been submitted.';
+                statusMsg.innerText = '✨ Thank you! Your RSVP has been saved to Google Sheets.';
                 rsvpForm.reset();
                 paxCount = 1;
                 togglePaxUI();
@@ -730,7 +898,7 @@
                 statusMsg.innerText = '❌ Failed to submit RSVP. Please try again.';
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.innerText = '💌 Submit RSVP';
+                submitBtn.innerText = '💌 Submit RSVP to Google Sheet';
             }
         });
 
@@ -825,6 +993,43 @@
         }
 
         audioBtn.addEventListener('click', playMelody);
+
+        // --- Photo Preview Handler ---
+        document.getElementById('camera-input').addEventListener('change', (e) => {
+            const previewContainer = document.getElementById('photo-preview');
+            const files = e.target.files;
+
+            for (let file of files) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const img = document.createElement('img');
+                    img.src = event.target.result;
+                    img.className = 'photo-thumb';
+                    previewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // --- Settings Modal ---
+        const modal = document.getElementById('settings-modal');
+        const scriptInput = document.getElementById('script-url');
+
+        document.getElementById('settings-toggle').addEventListener('click', () => {
+            scriptInput.value = localStorage.getItem('google_script_url') || '';
+            modal.classList.add('active');
+        });
+
+        document.getElementById('modal-close').addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        document.getElementById('save-settings').addEventListener('click', () => {
+            localStorage.setItem('google_script_url', scriptInput.value.trim());
+            CONFIG.GOOGLE_SCRIPT_URL = scriptInput.value.trim();
+            modal.classList.remove('active');
+            alert('Settings saved!');
+        });
     </script>
 </body>
 </html>
