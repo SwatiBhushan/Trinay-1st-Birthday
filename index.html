@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trinay's 1st Birthday</title>
+    <title>Trinay's 1st Birthday Celebration</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-dark: #0a0e1a;
@@ -29,7 +29,7 @@
         body {
             background-color: var(--bg-dark);
             color: var(--text-light);
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Nunito', sans-serif;
             overflow-x: hidden;
             min-height: 100vh;
             position: relative;
@@ -46,7 +46,7 @@
         }
 
         .container {
-            max-width: 500px;
+            max-width: 600px;
             margin: 0 auto;
             padding: 20px 16px 60px 16px;
             position: relative;
@@ -82,63 +82,60 @@
 
         .hero-section {
             text-align: center;
-            margin: 15px 0 30px 0;
+            margin: 20px 0 35px 0;
         }
 
-        /* Realistic Moon & Badge Container */
+        /* Full Moon & Badge Container */
         .moon-container {
             position: relative;
             width: 180px;
             height: 180px;
-            margin: 0 auto 20px auto;
+            margin: 0 auto 25px auto;
         }
 
-        .full-moon-wrapper {
+        .full-moon {
             width: 100%;
             height: 100%;
             border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #fffdf0 0%, #fae8a4 50%, #e2c068 85%, #b89235 100%);
+            box-shadow: 0 0 30px rgba(252, 211, 77, 0.6), 0 0 60px rgba(192, 132, 252, 0.3);
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden; /* Ensures photo fits perfectly into circle */
-            box-shadow: 0 0 35px rgba(252, 211, 77, 0.5), 0 0 70px rgba(192, 132, 252, 0.35);
+            overflow: hidden;
         }
 
-        .moon-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        /* Moon Crater Details */
+        .moon-crater {
+            position: absolute;
+            background: rgba(184, 146, 53, 0.2);
             border-radius: 50%;
-            display: block;
-            filter: brightness(1.05) contrast(1.1);
         }
+
+        .crater-1 { width: 35px; height: 35px; top: 20%; left: 20%; }
+        .crater-2 { width: 25px; height: 25px; bottom: 25%; left: 30%; }
+        .crater-3 { width: 45px; height: 45px; top: 40%; right: 15%; }
 
         .moon-number {
-            position: absolute;
-            font-family: 'Fredoka', sans-serif;
+            font-family: 'Cinzel', serif;
             font-size: 5rem;
-            font-weight: 700;
-            color: #ffffff;
-            text-shadow: 0px 4px 12px rgba(0, 0, 0, 0.9), 0px 0px 8px rgba(0, 0, 0, 0.7);
+            font-weight: 800;
+            color: #121829;
+            text-shadow: 0px 2px 4px rgba(255, 255, 255, 0.4);
             z-index: 2;
             line-height: 1;
         }
 
         .side-star {
             position: absolute;
-            top: -6px;
-            right: -6px;
-            width: 46px;
-            height: 46px;
-            filter: drop-shadow(0 0 12px rgba(252, 211, 77, 0.9));
+            top: -5px;
+            right: -10px;
+            font-size: 2.8rem;
+            color: var(--gold-accent);
+            filter: drop-shadow(0 0 10px rgba(252, 211, 77, 0.8));
             animation: pulse-star 2s infinite alternate ease-in-out;
             z-index: 3;
-        }
-
-        .side-star svg {
-            width: 100%;
-            height: 100%;
         }
 
         @keyframes pulse-star {
@@ -147,19 +144,20 @@
         }
 
         h1.title {
-            font-family: 'Fredoka', sans-serif;
+            font-family: 'Cinzel', serif;
             font-size: 2.2rem;
             font-weight: 700;
             background: linear-gradient(135deg, var(--pastel-blue), var(--pastel-purple), var(--pastel-pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .subtitle {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             color: var(--pastel-blue);
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             font-weight: 600;
         }
 
@@ -167,8 +165,8 @@
             background: var(--card-bg);
             border: 1px solid var(--border-glow);
             border-radius: 20px;
-            padding: 22px;
-            margin-bottom: 22px;
+            padding: 24px;
+            margin-bottom: 25px;
             backdrop-filter: blur(12px);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
@@ -176,21 +174,21 @@
         .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 18px;
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
         .info-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .info-icon {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             background: rgba(192, 132, 252, 0.15);
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -212,6 +210,7 @@
             color: var(--text-light);
         }
 
+        /* Countdown Timer */
         .countdown-title {
             text-align: center;
             font-size: 0.85rem;
@@ -219,13 +218,12 @@
             letter-spacing: 1.5px;
             color: var(--pastel-purple);
             margin-bottom: 12px;
-            font-weight: 700;
         }
 
         .timer-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
+            gap: 10px;
             text-align: center;
         }
 
@@ -233,11 +231,11 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
-            padding: 10px 4px;
+            padding: 10px 5px;
         }
 
         .timer-num {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: var(--gold-accent);
         }
@@ -248,8 +246,9 @@
             text-transform: uppercase;
         }
 
+        /* Form Controls */
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
 
         .form-group label {
@@ -270,7 +269,6 @@
             font-size: 1rem;
             outline: none;
             transition: border 0.3s ease;
-            font-family: inherit;
         }
 
         .form-input:focus {
@@ -314,6 +312,7 @@
             box-shadow: 0 0 12px rgba(192, 132, 252, 0.4);
         }
 
+        /* Pax Selector */
         .pax-control {
             display: flex;
             align-items: center;
@@ -350,6 +349,7 @@
             text-align: center;
         }
 
+        /* Buttons */
         .btn-primary {
             width: 100%;
             padding: 14px;
@@ -366,7 +366,6 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            font-family: inherit;
         }
 
         .btn-primary:hover {
@@ -391,13 +390,13 @@
             text-decoration: none;
             margin-top: 10px;
             transition: background 0.3s ease;
-            font-family: inherit;
         }
 
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.15);
         }
 
+        /* Status Toast */
         .status-msg {
             display: none;
             padding: 12px;
@@ -422,6 +421,7 @@
             color: #f87171;
         }
 
+        /* Photo Upload Modal / Section */
         .photo-preview-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -437,6 +437,7 @@
             border: 1px solid var(--border-glow);
         }
 
+        /* Config Modal */
         .modal {
             display: none;
             position: fixed;
@@ -483,36 +484,28 @@
 
     <div class="container">
         
+        <!-- Top Navigation Icons -->
         <div class="top-nav">
             <button class="icon-btn" id="audio-toggle" title="Play Twinkle Twinkle Melody">🎵</button>
             <button class="icon-btn" id="settings-toggle" title="Host Configuration" style="margin-left: 10px;">⚙️</button>
         </div>
 
+        <!-- Hero Banner -->
         <div class="hero-section">
             <div class="moon-container">
-                <div class="full-moon-wrapper">
-                    <img src="https://images.unsplash.com/photo-1532693322450-2cb5c511067d?q=80&w=600&auto=format&fit=crop" alt="Realistic Moon" class="moon-img">
+                <div class="full-moon">
+                    <div class="moon-crater crater-1"></div>
+                    <div class="moon-crater crater-2"></div>
+                    <div class="moon-crater crater-3"></div>
                     <div class="moon-number">1</div>
                 </div>
-                <!-- Realistic Glowing SVG Star -->
-                <div class="side-star">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <radialGradient id="star-glow" cx="50%" cy="50%" r="50%">
-                                <stop offset="0%" stop-color="#fff7d6" />
-                                <stop offset="40%" stop-color="#fcd34d" />
-                                <stop offset="85%" stop-color="#f59e0b" />
-                                <stop offset="100%" stop-color="#d97706" />
-                            </radialGradient>
-                        </defs>
-                        <path d="M50 5 L63 35 L95 38 L71 60 L78 92 L50 75 L22 92 L29 60 L5 38 L37 35 Z" fill="url(#star-glow)" />
-                    </svg>
-                </div>
+                <div class="side-star">⭐</div>
             </div>
             <h1 class="title">Trinay's 1st Birthday</h1>
             <p class="subtitle">Little Star is Turning One</p>
         </div>
 
+        <!-- Date & Location Details -->
         <div class="card">
             <div class="info-grid">
                 <div class="info-item">
@@ -531,7 +524,7 @@
                 </div>
             </div>
 
-            <div class="info-item" style="margin-bottom: 18px;">
+            <div class="info-item" style="margin-bottom: 20px;">
                 <div class="info-icon">📍</div>
                 <div class="info-text">
                     <label>Venue</label>
@@ -539,11 +532,13 @@
                 </div>
             </div>
 
+            <!-- Google Maps Link -->
             <a href="https://maps.google.com/?q=Eden+Park+Cunningham+Road" target="_blank" class="btn-secondary">
                 🗺️ Open in Google Maps
             </a>
         </div>
 
+        <!-- Countdown Timer -->
         <div class="card">
             <div class="countdown-title">Countdown to Celebration</div>
             <div class="timer-grid">
@@ -566,8 +561,9 @@
             </div>
         </div>
 
+        <!-- RSVP Form -->
         <div class="card">
-            <h2 style="font-family: 'Fredoka', sans-serif; margin-bottom: 16px; font-size: 1.4rem; text-align: center; color: var(--pastel-purple);">
+            <h2 style="font-family: 'Cinzel', serif; margin-bottom: 18px; font-size: 1.4rem; text-align: center; color: var(--pastel-purple);">
                 RSVP Response
             </h2>
             <form id="rsvp-form">
@@ -600,6 +596,11 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="guest-notes">Special Note / Wishes (Optional)</label>
+                    <input type="text" id="guest-notes" class="form-input" placeholder="Any dietary preferences or wishes">
+                </div>
+
                 <button type="submit" class="btn-primary" id="submit-btn">
                     💌 Submit RSVP
                 </button>
@@ -608,11 +609,12 @@
             </form>
         </div>
 
+        <!-- Memory Capture & Photo Upload -->
         <div class="card">
-            <h2 style="font-family: 'Fredoka', sans-serif; margin-bottom: 10px; font-size: 1.3rem; text-align: center; color: var(--pastel-blue);">
+            <h2 style="font-family: 'Cinzel', serif; margin-bottom: 12px; font-size: 1.3rem; text-align: center; color: var(--pastel-blue);">
                 📷 Event Memories
             </h2>
-            <p style="text-align: center; font-size: 0.85rem; color: #94a3b8; margin-bottom: 14px;">
+            <p style="text-align: center; font-size: 0.85rem; color: #94a3b8; margin-bottom: 15px;">
                 Snap and upload your memories during or after the party!
             </p>
             
@@ -626,10 +628,11 @@
 
     </div>
 
+    <!-- Host Settings Modal -->
     <div class="modal" id="settings-modal">
         <div class="modal-content">
             <button class="modal-close" id="modal-close">&times;</button>
-            <h3 style="font-family: 'Fredoka', sans-serif; margin-bottom: 15px; color: var(--pastel-purple);">Host Configuration</h3>
+            <h3 style="font-family: 'Cinzel', serif; margin-bottom: 15px; color: var(--pastel-purple);">Host Configuration</h3>
             
             <div class="form-group">
                 <label for="script-url">Google Apps Script Web App URL</label>
@@ -641,12 +644,13 @@
     </div>
 
     <script>
+        // Default Configuration
         const CONFIG = {
             TARGET_DATE: new Date("October 11, 2026 18:00:00").getTime(),
-            GOOGLE_SCRIPT_URL: localStorage.getItem('google_script_url') || ''
+            GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycby4lHQJH5Ym_UqcPU60iKN6f9u9P5_dyeRl20ayTJmaO2PMY_9SAvGNSjFnH8K1KTcr/exec'
         };
 
-        // Twinkling Star Canvas
+        // --- Canvas Animation ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
@@ -658,7 +662,7 @@
 
         function initStars() {
             stars = [];
-            const count = Math.floor((canvas.width * canvas.height) / 2500);
+            const count = Math.floor((canvas.width * canvas.height) / 3000);
             for (let i = 0; i < count; i++) {
                 stars.push({
                     x: Math.random() * canvas.width,
@@ -673,6 +677,7 @@
         function drawCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
+            // Draw twinkling stars
             stars.forEach(star => {
                 star.alpha += star.speed;
                 if (star.alpha > 1 || star.alpha < 0) star.speed = -star.speed;
@@ -691,6 +696,7 @@
         initStars();
         drawCanvas();
 
+        // --- Countdown Timer ---
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = CONFIG.TARGET_DATE - now;
@@ -716,6 +722,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
+        // --- Pax Count Selector ---
         let paxCount = 1;
         const paxVal = document.getElementById('pax-val');
         document.getElementById('pax-minus').addEventListener('click', () => {
@@ -725,6 +732,7 @@
             if (paxCount < 10) { paxCount++; paxVal.innerText = paxCount; }
         });
 
+        // --- RSVP Form Submission to Google Sheet ---
         const rsvpForm = document.getElementById('rsvp-form');
         const statusMsg = document.getElementById('status-msg');
         const submitBtn = document.getElementById('submit-btn');
@@ -742,11 +750,13 @@
 
             const name = document.getElementById('guest-name').value.trim();
             const attending = document.querySelector('input[name="attending"]:checked').value;
+            const notes = document.getElementById('guest-notes').value.trim();
 
             const payload = {
                 name: name,
                 attending: attending,
-                pax: paxCount
+                pax: paxCount,
+                notes: notes
             };
 
             submitBtn.disabled = true;
@@ -763,7 +773,7 @@
                 });
 
                 statusMsg.className = 'status-msg success';
-                statusMsg.innerText = '✨ Thank you! Your RSVP has been saved.';
+                statusMsg.innerText = '✨ Thank you! Your RSVP has been saved to Google Sheets.';
                 rsvpForm.reset();
                 paxCount = 1;
                 paxVal.innerText = 1;
@@ -773,11 +783,13 @@
                 statusMsg.innerText = '❌ Failed to submit RSVP. Please try again.';
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.innerText = '💌 Submit RSVP';
+                submitBtn.innerText = '💌 Submit RSVP to Google Sheet';
             }
         });
 
+        // --- Twinkle Twinkle Audio Synthesizer ---
         let audioCtx = null;
+        let isPlaying = false;
 
         const melody = [
             { note: 261.63, duration: 0.4 }, { note: 261.63, duration: 0.4 },
@@ -818,6 +830,7 @@
             playMelody();
         });
 
+        // --- Photo Preview Handler ---
         document.getElementById('camera-input').addEventListener('change', (e) => {
             const previewContainer = document.getElementById('photo-preview');
             const files = e.target.files;
@@ -834,6 +847,7 @@
             }
         });
 
+        // --- Settings Modal ---
         const modal = document.getElementById('settings-modal');
         const scriptInput = document.getElementById('script-url');
 
