@@ -289,14 +289,17 @@
             box-shadow: 0 0 10px rgba(192, 132, 252, 0.3);
         }
 
+        /* Radio Buttons Equal Height Fix */
         .radio-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
+            align-items: stretch;
         }
 
         .radio-btn {
             position: relative;
+            height: 100%;
         }
 
         .radio-btn input {
@@ -310,12 +313,14 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 12px;
+            padding: 12px 8px;
+            height: 100%;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             cursor: pointer;
             font-weight: 700;
+            text-align: center;
             transition: all 0.3s ease;
         }
 
@@ -548,7 +553,9 @@
                     <div class="radio-group">
                         <div class="radio-btn">
                             <input type="radio" id="rsvp-yes" name="attending" value="Yes" checked>
-                            <label for="rsvp-yes" class="radio-label">✨ Yes, Excited!</label>
+                            <label for="rsvp-yes" class="radio-label">
+                                <span>✨ Yes, Excited!</span>
+                            </label>
                         </div>
                         <div class="radio-btn">
                             <input type="radio" id="rsvp-no" name="attending" value="No">
